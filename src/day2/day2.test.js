@@ -105,4 +105,3 @@ test('minGameCubes', () => {
   })
   ).toEqual({ red: 14, green: 3, blue: 15 });
 });
-
