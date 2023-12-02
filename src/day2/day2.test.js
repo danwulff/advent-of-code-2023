@@ -1,4 +1,4 @@
-const { day2, parseGame, isGamePossible } = require("./day2");
+const { day2, parseGame, isGamePossible, minGameCubes } = require("./day2");
 
 let input = `Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
@@ -9,7 +9,7 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green`;
 test("day2", () => {
   const result = day2(input);
   expect(result.partOne).toBe(8);
-  expect(result.partTwo).toBe(null);
+  expect(result.partTwo).toBe(2286);
 });
 
 test('parseGame', () => {
@@ -86,5 +86,41 @@ test('isGamePossible', () => {
       blue: 14,
     })
   ).toBe(false);
+});
+
+test('minGameCubes', () => {
+  expect(minGameCubes({
+    id: 1,
+    sets: [{
+      blue: 3,
+      red: 4
+    }, {
+      red: 1,
+      green: 2,
+      blue: 6
+    }, {
+      green: 2,
+    }]
+  })).toEqual({ red: 4, green: 2, blue: 6 });
+  expect(minGameCubes({
+    id: 4,
+    sets: [{
+      green: 1,
+      blue: 6,
+      red: 3
+    }, {
+      red: 6,
+      green: 3,
+    }, {
+      green: 3,
+      blue: 15,
+      red: 14,
+    }]
+  }, {
+    red: 12,
+    green: 13,
+    blue: 14,
+  })
+  ).toEqual({ red: 14, green: 3, blue: 15 });
 });
 
