@@ -1,18 +1,17 @@
 function day1(input) {
   const lines = input.trim().split('\n');
 
-  const sumPartOne = lines.reduce((accum, current) => {
-    return accum + calibrationLineValuePartOne(current);
-  }, 0);
+  const result = {
+    partOne: 0,
+    partTwo: 0,
+  }
 
-  const sumPartTwo = lines.reduce((accum, current) => {
-    return accum + calibrationLineValuePartTwo(current);
-  }, 0);
+  lines.forEach(line => {
+    result.partOne += calibrationLineValuePartOne(line);
+    result.partTwo += calibrationLineValuePartTwo(line);
+  });
 
-  return {
-    partOne: sumPartOne,
-    partTwo: sumPartTwo,
-  };
+  return result;
 }
 
 function calibrationLineValuePartOne(input) {
@@ -26,6 +25,7 @@ function findDigit(c) {
   return !isNaN(c);
 }
 
+// Note: it's possible to do this in one regex with lookahead/lookbehind, would rewrite
 const findStringDigitExp = /(\d|one|two|three|four|five|six|seven|eight|nine)/;
 const findReversedStringDigitExp = /(\d|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin)/;
 

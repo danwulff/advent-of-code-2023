@@ -1,28 +1,25 @@
 function day2(input) {
   const games = input.trim().split('\n');
-  const maxCubes = {
+  const totalCubes = {
     red: 12,
     green: 13,
     blue: 14,
   };
 
-  const sumGameIds = games.reduce((accum, game) => {
-    const parsedGame = parseGame(game);
-    if (isGamePossible(parsedGame, maxCubes)) {
-      return accum + parsedGame.id;
-    }
-    return accum;
-  }, 0);
-
-  const sumMinCubePowers = games.reduce((accum, game) => {
-    const minCubes = minGameCubes(parseGame(game));
-    return accum + (minCubes.red * minCubes.green * minCubes.blue);
-  }, 0);
-
-  return {
-    partOne: sumGameIds,
-    partTwo: sumMinCubePowers,
+  const result = {
+    partOne: 0,
+    partTwo: 0,
   };
+
+  games.forEach(game => {
+    const parsedGame = parseGame(game);
+    const maxCubesInThisGame = maxCubesInGame(parsedGame);
+    if (isGamePossible(maxCubesInThisGame, totalCubes)) {
+      result.partOne += parsedGame.id;
+    }
+    result.partTwo += (maxCubesInThisGame.red * maxCubesInThisGame.green * maxCubesInThisGame.blue);
+  });
+  return result;
 }
 
 function parseGame(game) {
@@ -44,16 +41,14 @@ function parseGame(game) {
   };
 }
 
-function isGamePossible(parsedGame, totalColors) {
-  const gameMax = minGameCubes(parsedGame);
-
-  if (totalColors.red < gameMax.red ||totalColors.green < gameMax.green || totalColors.blue < gameMax.blue) {
+function isGamePossible(maxCubes, totalCubes) {
+  if (totalCubes.red < maxCubes.red ||totalCubes.green < maxCubes.green || totalCubes.blue < maxCubes.blue) {
     return false
   }
   return true;
 }
 
-function minGameCubes(parsedGame) {
+function maxCubesInGame(parsedGame) {
   const gameMax = {
     red: 0,
     blue: 0,
@@ -75,5 +70,5 @@ module.exports = {
   day2,
   parseGame,
   isGamePossible,
-  minGameCubes,
+  maxCubesInGame,
 };
