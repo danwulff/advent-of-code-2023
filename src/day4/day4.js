@@ -1,9 +1,9 @@
 const digit = /(\d+)/g;
 
 function day4(input) {
-  const cards = input.trim().split('\n').map(card => parseCard(card));
+  const originalCards = input.trim().split('\n').map(card => parseCard(card));
   let partOne = 0;
-  cards.forEach(card => {
+  originalCards.forEach(card => {
     let cardVal = 0;
     card.winningNums.forEach(winningNum => {
       const winnerWinner = card.myNums.some(myNum => winningNum === myNum);
@@ -16,9 +16,28 @@ function day4(input) {
     partOne += cardVal;
   });
 
+  let partTwo = 0;
+  const cards = [...originalCards];
+  while (cards.length) {
+    partTwo += 1;
+    const card = cards.pop();
+    let cardVal = 0;
+    card.winningNums.forEach(winningNum => {
+      const winnerWinner = card.myNums.some(myNum => winningNum === myNum);
+      if (winnerWinner) {
+        cardVal += 1;
+      }
+    });
+    while (cardVal) {
+      const index = originalCards.indexOf(card);
+      cards.push(originalCards[index + cardVal]);
+      cardVal -= 1;
+    }
+  }
+
   return {
-    partOne: partOne,
-    partTwo: null,
+    partOne,
+    partTwo,
   };
 }
 

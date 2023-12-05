@@ -10,5 +10,5 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11`;
 test("day4", () => {
   const { partOne, partTwo } = day4(input);
   expect(partOne).toBe(13);
-  expect(partTwo).toBe(null);
+  expect(partTwo).toBe(30);
 });
