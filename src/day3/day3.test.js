@@ -1,4 +1,4 @@
-const { day3, parseRow, findPartNums } = require("./day3");
+const { day3, parseRow, findPartNums, findGearRatios } = require("./day3");
 
 let input = `467..114..
 ...*......
@@ -14,7 +14,7 @@ let input = `467..114..
 test("day3", () => {
   const result = day3(input);
   expect(result.partOne).toBe(4361);
-  expect(result.partTwo).toBe(null);
+  expect(result.partTwo).toBe(467835);
 });
 
 test("parseRow", () => {
@@ -184,4 +184,85 @@ test("findPartNums", () => {
   const expectedResults = [467, 35, 633];
 
   expect(findPartNums(rows)).toEqual(expectedResults);
+});
+
+test("findGearRatios", () => {
+  expect(findGearRatios(
+    [
+      {
+        nums: [
+          {
+            val: '467',
+            index: 0,
+          }, {
+            val: '114',
+            index: 5,
+          },
+        ],
+        symbols: []
+      },
+      {
+        nums: [],
+        symbols: [
+          {
+            val: '*',
+            index: 3,
+          }
+        ],
+      },
+      {
+        nums: [
+          {
+            val: '35',
+            index: 2,
+          },
+          {
+            val: '633',
+            index: 6,
+          }
+        ],
+        symbols: [],
+      }
+    ]
+  )).toEqual([16345]);
+
+  expect(findGearRatios(
+    [
+      {
+        nums: [
+          {
+            val: '755',
+            index: 6
+          }
+        ],
+        symbols: [],
+      },
+      {
+        nums: [],
+        symbols: [
+          {
+            val: '$',
+            index: 3,
+          },
+          {
+            val: '*',
+            index: 5,
+          }
+        ]
+      },
+      {
+        nums: [
+          {
+            val: '664',
+            index: 1,
+          },
+          {
+            val: '598',
+            index: 5,
+          }
+        ],
+        symbols: []
+      }
+    ]
+  )).toEqual([451490]);
 });
